@@ -1,4 +1,4 @@
-[Poly World](https://img.itch.zone/aW1nLzExNzYzOTkucG5n/original/RyG6Zz.png)
+![Poly World](https://img.itch.zone/aW1nLzExNzYzOTkucG5n/original/RyG6Zz.png)
 
 Poly World
 ===
