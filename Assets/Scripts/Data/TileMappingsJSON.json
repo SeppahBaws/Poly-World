@@ -1,0 +1,32 @@
+{
+  "mappings": [
+    {
+      "name": "Road",
+      "width": 1,
+      "height": 1,
+      "prefab": "Buildables/Infrastructure/Road",
+      "type": 1
+    },
+    {
+      "name": "House",
+      "width": 1,
+      "height": 1,
+      "prefab": "Buildables/Buildings/House_02",
+      "type": 2
+    },
+    {
+      "name": "Factory",
+      "width": 2,
+      "height": 2,
+      "prefab": "Buildables/Buildings/Factory",
+      "type": 3
+    },
+    {
+      "name": "Test",
+      "width": 2,
+      "height": 4,
+      "prefab": "Buildables/Buildings/Factory",
+      "type": 4
+    }
+  ]
+}
