@@ -1,0 +1,72 @@
+﻿{
+  "items": [
+    {
+      "name": "Road",
+      "width": 1,
+      "height": 1,
+      "variations": [
+        {
+          "name": "straight_road",
+          "prefab": "Buildables/Infrastructure/Road_Straight"
+        },
+        {
+          "name": "corner_road",
+          "prefab": "Buildables/Infrastructure/Road_Corner"
+        },
+        {
+          "name": "tway_road",
+          "prefab": "Buildables/Infrastructure/Road_Tway"
+        },
+        {
+          "name": "cross_road",
+          "prefab": "Buildables/Infrastructure/Road_Crossing"
+        }
+      ]
+    },
+    {
+      "name": "House",
+      "width": 1,
+      "height": 1,
+      "variations": [
+        {
+          "name": "House_01",
+          "prefab": "Buildables/Buildings/Residential/House_01"
+        },
+        {
+          "name": "House_02",
+          "prefab": "Buildables/Buildings/Residential/House_02"
+        },
+        {
+          "name": "House_03",
+          "prefab": "Buildables/Buildings/Residential/House_03"
+        }
+      ]
+    },
+    {
+      "name": "Apartments",
+      "width": 2,
+      "height": 1,
+      "variations": [
+        {
+          "name": "Apartments_01",
+          "prefab": "Buildables/Buildings/Residential/Apartments_01"
+        }
+      ]
+    },
+    {
+      "name": "Factory",
+      "width": 3,
+      "height": 3,
+      "variations": [
+        {
+          "name": "Factory_01",
+          "prefab": "Buildables/Buildings/Industrial/Factory_01"
+        },
+        {
+          "name": "Factory_02",
+          "prefab": "Buildables/Buildings/Industrial/Factory_02"
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
       "name": "Road",
       "width": 1,
       "height": 1,
-      "prefab": "Buildables/Infrastructure/Road",
+      "prefab": "Buildables/Infrastructure/StraigtRoad",
       "type": 1
     },
     {

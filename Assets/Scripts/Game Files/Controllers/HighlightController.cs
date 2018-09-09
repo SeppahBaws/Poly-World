@@ -10,11 +10,17 @@ public class HighlightController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButton(2))
+        {
+            highlightObject.SetActive(false);
+            return;
+        }
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Vector2 hitPos = new Vector2(Mathf.RoundToInt(hit.point.x + 0.5f), Mathf.RoundToInt(hit.point.x + 0.5f));
+            Vector2 hitPos = new Vector2(Mathf.RoundToInt(hit.point.x + 0.5f), Mathf.RoundToInt(hit.point.z + 0.5f));
             
             // Show the highlight object
             highlightObject.SetActive(true);
