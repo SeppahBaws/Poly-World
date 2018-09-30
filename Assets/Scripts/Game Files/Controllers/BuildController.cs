@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 enum Direction
@@ -55,6 +54,7 @@ public class BuildController : MonoBehaviour
 
         if (selected.Type != Tile.TileType.Road)
         {
+            Debug.Log(mapping.prefab);
             WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y), mapping.prefab.transform, selected);
         }
         else
@@ -273,6 +273,7 @@ public class BuildController : MonoBehaviour
                 break;
         }
         tile.ObjectInScene = newRoad;
+        newRoad.transform.parent = WorldController.Instance.worldParent.transform;
     }
 
     private List<Neighbor> GetNeighborRoads(Tile tile, World world)

@@ -106,7 +106,7 @@ public class WorldController : MonoBehaviour
     // ==================
     //   Util functions
     // ==================
-    Vector3 CastRay()
+    public Vector3 CastRay()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

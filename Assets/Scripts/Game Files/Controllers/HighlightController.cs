@@ -29,9 +29,4 @@ public class HighlightController : MonoBehaviour
                 new Vector3(hitPos.x, 0f, hitPos.y), highlightSpeed);
         }
     }
-
-    bool IsMouseMoving()
-    {
-        return Input.GetAxis("Mouse X") != 0f && Input.GetAxis("Mouse Y") != 0f;
-    }
 }

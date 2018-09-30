@@ -21,6 +21,8 @@ public class Tile
 		Factory = 4
 	}
 
+	public Tile pathParent;
+	public int f, g, h;
 	public int X { get; private set; }
     public int Y { get; private set; }
     public TileType Type { get; private set; }

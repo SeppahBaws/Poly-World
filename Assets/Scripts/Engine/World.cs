@@ -63,4 +63,27 @@ public class World
 
         return tiles;
     }
+    
+    public List<Tile> GetNeighbors(Tile tile)
+    {
+        List<Tile> neighbors = new List<Tile>();
+
+        // North
+        if (tile.Y < WorldHeight - 1)
+            neighbors.Add(GetTileAt(new Vector2(tile.X, tile.Y + 1)));
+
+        // East
+        if (tile.X < WorldWidth - 1)
+            neighbors.Add(GetTileAt(new Vector2(tile.X + 1, tile.Y)));
+
+        // South
+        if (tile.Y > 0)
+            neighbors.Add(GetTileAt(new Vector2(tile.X, tile.Y - 1)));
+
+        // West
+        if (tile.X > 0)
+            neighbors.Add(GetTileAt(new Vector2(tile.X - 1, tile.Y)));
+
+        return neighbors;
+    }
 }
