@@ -1,4 +1,16 @@
-![Poly World](https://img.itch.zone/aW1nLzExNzYzOTkucG5n/original/RyG6Zz.png)
+![Poly World Logo](https://img.itch.zone/aW1nLzExNzYzOTkucG5n/original/RyG6Zz.png)
+
+<p align="center">
+    <a href="https://github.com/SeppahBaws/Poly-World/tags">
+        <img alt="Github tags" src="https://img.shields.io/github/tag/SeppahBaws/Poly-World.svg?label=version">
+    </a>
+    <a href="https://seppahbaws.itch.io/poly-world">
+        <img alt="Download on Itch.io" src="https://img.shields.io/badge/Download-Itch.io-%23fa5c5c.svg">
+    </a>
+    <a href="https://trello.com/b/CRc47iCi/poly-world-roadmap">
+        <img alt="Public roadmap on Trello" src="https://img.shields.io/badge/Trello-Roadmap-%230079BF.svg?logo=Trello&logoColor=ffffff">
+    </a>
+</p>
 
 Poly World
 ===
