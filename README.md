@@ -27,4 +27,4 @@ There is also a Discord server! You can give suggestions and chat with other pla
 
 Also if you join while the game is still in Early Alpha you'll get a special role to show off to other people how big of a fan you are!
 
-Just click this link to join the server: [https://discord.gg/dSVp5dW](https://discord.gg/dSVp5dW)
+Just click this link to join the server: [https://discord.gg/rQ67Fcj](https://discord.gg/rQ67Fcj)
