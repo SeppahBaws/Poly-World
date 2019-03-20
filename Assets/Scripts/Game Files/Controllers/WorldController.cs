@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class WorldController : MonoBehaviour
 {
+	public TextAsset testAsset;
+
+    public bool ShowDebugGrid;
+
     public World world;
 
     public static WorldController Instance { get; private set; }
@@ -39,9 +47,12 @@ public class WorldController : MonoBehaviour
             {
                 SubMapping mapping = Mappings[i].variations[j];
 
-                mapping.prefabGO = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/" + mapping.prefab + ".prefab", typeof(GameObject));
+				Debug.Log("Loading prefab at \"" + "Assets/Resources/" + mapping.prefab + "\"");
+                mapping.prefabGO = Resources.Load<GameObject>(mapping.prefab);
             }
         }
+
+        testAsset = Resources.Load<TextAsset>("test");
     }
 
     public void GenerateWorld(int width, int height)
@@ -55,10 +66,17 @@ public class WorldController : MonoBehaviour
         HandleSelectedTileTypeSwitching();
 
         if (Input.GetMouseButton(0))
-            Build();
+        {
+			// Ignore UI clicks
+			if (EventSystem.current.IsPointerOverGameObject())
+				return;
 
-        if (Input.GetMouseButton(1))
-            Demolish();
+			Build();
+        }
+        else if (Input.GetMouseButton(1))
+        {
+	        Demolish();
+        }
     }
 
     // Temporary code to select what to build
@@ -74,6 +92,12 @@ public class WorldController : MonoBehaviour
             SelectedTileType = (Tile.TileType)3;
         if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             SelectedTileType = (Tile.TileType)4;
+    }
+
+	// Used by build menu
+    public void SwitchBuildType(int type)
+    {
+	    SelectedTileType = (Tile.TileType)type;
     }
 
     private void Build()
@@ -127,7 +151,8 @@ public class WorldController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (EditorApplication.isPlaying)
+#if UNITY_EDITOR
+		if (EditorApplication.isPlaying && ShowDebugGrid)
         {
             foreach (Tile tile in world.WorldData)
             {
@@ -151,5 +176,6 @@ public class WorldController : MonoBehaviour
                 Gizmos.DrawCube(new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f), Vector3.one / 2);
             }
         }
+#endif
     }
 }

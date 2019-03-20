@@ -47,6 +47,16 @@ public class Tile
         return new Vector2(X, Y);
     }
 
+    public Vector3 WorldPosition()
+    {
+        return new Vector3(X, 0, Y);
+    }
+
+    public Vector3 AdjustedWorldPosition()
+    {
+        return new Vector3(X + 0.5f, 0, Y + 0.5f);
+    }
+
 
     // =============
     //   Overrides

@@ -13,7 +13,8 @@ public class MoveCamera : MonoBehaviour
     public float distanceMin = .5f;
     public float distanceMax = 15f;
 
-    public float zoomSpeed = 5f;
+    public float keyZoomSpeed = 1f;
+    public float keyRotateSpeed = 1f;
 
     private new Rigidbody rigidbody;
 
@@ -61,9 +62,9 @@ public class MoveCamera : MonoBehaviour
                 rotation = Quaternion.Euler(y, x, 0);
             }
 
-            // Q and E button rotation
-            x += Input.GetAxis("RotateCamLeftRight") * xSpeed * 0.02f;
-            y -= Input.GetAxis("RotateCamUpDown") * ySpeed * 0.02f;
+            // Keyboard rotation
+            x += Input.GetAxis("RotateCamLeftRight") * keyRotateSpeed * 0.02f;
+            y -= Input.GetAxis("RotateCamUpDown") * keyRotateSpeed * 0.02f;
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);
 
@@ -73,7 +74,7 @@ public class MoveCamera : MonoBehaviour
             // Zoom
             distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 10 * (distance / 10), distanceMin,
                 distanceMax);
-            distance += Input.GetAxis("ZoomCam") * zoomSpeed;
+            distance += Input.GetAxis("ZoomCam") * keyZoomSpeed;
             yMinLimit = distance / 10;
             y = ClampAngle(y, yMinLimit, yMaxLimit);
 

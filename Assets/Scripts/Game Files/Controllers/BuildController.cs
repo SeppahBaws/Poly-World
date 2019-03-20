@@ -29,7 +29,7 @@ public class BuildController : MonoBehaviour
         if (mapping.type == Tile.TileType.Empty)
             return;
 
-        // TODO: can we optimize this?
+        // TODO: optimize with box collider check. (see note on Google Keep)
         // Do a check
         for (int x = 0; x < mapping.width; x++)
         {
@@ -54,19 +54,22 @@ public class BuildController : MonoBehaviour
 
         if (selected.Type != Tile.TileType.Road)
         {
-            Debug.Log(mapping.prefab);
+            // If we didn't place down a road, we can go ahead and spawn the asset.
             WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y), mapping.prefab.transform, selected);
         }
         else
         {
+            // If we just placed down a road Tile, update it
+            // in order for it to have the right road type asset.
             UpdateRoad(selected, world);
         }
 
 
+        // If we just built a road, we want to update all the neighboring road tiles.
         if (mapping.type == Tile.TileType.Road)
         {
             List<Neighbor> neighbors = GetNeighborRoads(selected, world);
-            List<int> neighborPos = GetNeighborRoadsInts(selected, world);
+            //List<int> neighborPos = GetNeighborRoadsInts(selected, world);
 
             for (int i = 0; i < neighbors.Count; i++)
             {
@@ -108,7 +111,7 @@ public class BuildController : MonoBehaviour
             if (prevType == Tile.TileType.Road)
             {
                 List<Neighbor> neighbors = GetNeighborRoads(tile, world);
-                List<int> neighborPos = GetNeighborRoadsInts(tile, world);
+                //List<int> neighborPos = GetNeighborRoadsInts(tile, world);
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
@@ -138,7 +141,7 @@ public class BuildController : MonoBehaviour
     private void UpdateRoad(Tile tile, World world)
     {
         List<int> neighbors = GetNeighborRoadsInts(tile, world);
-        Debug.Log("Number of neighbors: " + neighbors.Count);
+        //Debug.Log("Number of neighbors: " + neighbors.Count);
 
         Destroy(tile.ObjectInScene);
 
@@ -271,6 +274,9 @@ public class BuildController : MonoBehaviour
                 newRoad = Instantiate(WorldController.Instance.Mappings[0].variations[3].prefabGO);
                 newRoad.transform.position = new Vector3(tile.Position().x, 0, tile.Position().y);
                 break;
+            default:
+                Debug.LogError("Invalid neighbors count");
+                return;
         }
         tile.ObjectInScene = newRoad;
         newRoad.transform.parent = WorldController.Instance.worldParent.transform;

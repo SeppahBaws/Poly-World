@@ -27,10 +27,11 @@ public class TrafficController : MonoBehaviour
 
     // Spawns a car and makes it drive from its start to its goal.
     // TODO: more functionality later. e.g. specifying what type etc
+    // TODO: make this multithreaded, since the AStar algorithm can slow the game down for quite a bit
     public void RequestRoute(Tile start, Tile goal)
     {
         GameObject car = Instantiate(carPrefab);
-        car.GetComponent<Vehicle>().path = AStar.FindPath(start, goal);
+        car.GetComponent<Vehicle>().Path = AStar.FindPath(start, goal);
         car.transform.position = new Vector3(start.Position().x + 0.5f, 0, start.Position().y + 0.5f);
     }
 }
