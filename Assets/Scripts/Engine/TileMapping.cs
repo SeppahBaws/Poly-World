@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -18,13 +18,17 @@ public class Mapping
     public string name;
     public int width;
     public int height;
+    public Tile.TileType assignedType;
+    public bool randomVariation;
     public List<SubMapping> variations;
 
-    public Mapping(string name, int width, int height, List<SubMapping> variations)
+    public Mapping(string name, int width, int height, bool randomVariation, List<SubMapping> variations)
     {
         this.name = name;
         this.width = width;
         this.height = height;
+        this.assignedType = Tile.TileType.Empty;
+        this.randomVariation = randomVariation;
         this.variations = variations;
     }
 }
@@ -50,6 +54,7 @@ public class TileMapping
     public string name;
     public int width;
     public int height;
+    public bool randomVariation;
     public GameObject prefab;
     public Tile.TileType type;
 
@@ -58,14 +63,16 @@ public class TileMapping
         name = "";
         width = 0;
         height = 0;
+        randomVariation = false;
         type = Tile.TileType.Empty;
     }
 
-    public TileMapping(string name, int width, int height, GameObject prefab, Tile.TileType type)
+    public TileMapping(string name, int width, int height, bool randomVariation, GameObject prefab, Tile.TileType type)
     {
         this.name = name;
         this.width = width;
         this.height = height;
+        this.randomVariation = randomVariation;
         this.prefab = prefab;
         this.type = type;
     }

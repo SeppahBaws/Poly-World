@@ -20,15 +20,17 @@ public class WorldController : MonoBehaviour
 
     public Tile.TileType SelectedTileType;
 
+    public bool loadMappingsOnGameLoad;
+    public TextAsset tileMappingsSource;
     public List<TileMapping> TileMappings;
     public List<Mapping> Mappings;
-    public TextAsset tileMappingsSource;
     public GameObject worldParent;
     public List<Transform> worldObjects;
 
     private void Start()
     {
-        LoadMappings();
+        if (loadMappingsOnGameLoad)
+            LoadMappings();
         Instance = this;
 
         gameObject.AddComponent<BuildController>();
@@ -51,8 +53,6 @@ public class WorldController : MonoBehaviour
                 mapping.prefabGO = Resources.Load<GameObject>(mapping.prefab);
             }
         }
-
-        testAsset = Resources.Load<TextAsset>("test");
     }
 
     public void GenerateWorld(int width, int height)
@@ -104,7 +104,8 @@ public class WorldController : MonoBehaviour
     {
         Vector3 clickPoint = CastRay();
         Tile clickedTile = world.GetTileAt(V3ToWorldSpace(clickPoint));
-        TileMapping mapping = TileMappings.Find(m => m.type == SelectedTileType);
+//        TileMapping mapping = TileMappings.Find(m => m.type == SelectedTileType);
+        Mapping mapping = Mappings.Find(m => m.assignedType == SelectedTileType);
 
         //Debug.Log(mapping.ToString());
 

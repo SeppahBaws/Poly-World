@@ -72,11 +72,9 @@
                     // Get how far we are in the falloff zone
                     float zoneDistance = dist - (_FocusRadius - _FalloffDistance);
                     falloffMultiplier = 1 - (zoneDistance / _FalloffDistance);
-                    //finalColor = float3(1, 0, 1);
                 }
 
                 finalColor += _GridColor * falloffMultiplier;
-                //finalColor += _GridColor;
             }
 
             o.Albedo = finalColor;

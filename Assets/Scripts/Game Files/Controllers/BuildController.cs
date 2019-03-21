@@ -1,6 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//using Random = System.Random;
 
 enum Direction
 {
@@ -24,9 +26,10 @@ struct Neighbor
 
 public class BuildController : MonoBehaviour
 {
-    public void Build(TileMapping mapping, Tile selected, World world)
+//    public void Build(TileMapping mapping, Tile selected, World world)
+    public void Build(Mapping mapping, Tile selected, World world)
     {
-        if (mapping.type == Tile.TileType.Empty)
+        if (mapping.assignedType == Tile.TileType.Empty)
             return;
 
         // TODO: optimize with box collider check. (see note on Google Keep)
@@ -47,7 +50,7 @@ public class BuildController : MonoBehaviour
             for (int y = 0; y < mapping.height; y++)
             {
                 Tile tile = world.GetTileAt(new Vector2(selected.X + x, selected.Y + y));
-                tile.SetType(mapping.type);
+                tile.SetType(mapping.assignedType);
                 tile.SetParentTile(selected);
             }
         }
@@ -55,7 +58,22 @@ public class BuildController : MonoBehaviour
         if (selected.Type != Tile.TileType.Road)
         {
             // If we didn't place down a road, we can go ahead and spawn the asset.
-            WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y), mapping.prefab.transform, selected);
+            // WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y), mapping.prefab.transform, selected);
+
+            // Check if we can spawn random variations of this variation
+            if (!mapping.randomVariation)
+            {
+                // No, just spawn the first one
+                WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y),
+                    mapping.variations[0].prefabGO.transform, selected);
+            }
+            else
+            {
+                // Yes, generate a random index and use that variation
+                int index = Random.Range(0, mapping.variations.Count);  // Random.Range's max is exclusive, no need for `Count - 1`
+                WorldController.Instance.SpawnInstance(new Vector3(selected.X, 0, selected.Y),
+                    mapping.variations[index].prefabGO.transform, selected);
+            }
         }
         else
         {
@@ -66,7 +84,7 @@ public class BuildController : MonoBehaviour
 
 
         // If we just built a road, we want to update all the neighboring road tiles.
-        if (mapping.type == Tile.TileType.Road)
+        if (mapping.assignedType == Tile.TileType.Road)
         {
             List<Neighbor> neighbors = GetNeighborRoads(selected, world);
             //List<int> neighborPos = GetNeighborRoadsInts(selected, world);

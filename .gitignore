@@ -1,7 +1,7 @@
 # Assets from the Unity Store
-Assets/SimplePoly World/*
-Assets/SimplePoly City/*
-Assets/LowPolyWaterv2/*
+Assets/ExternalPackages/SimplePoly World/*
+Assets/ExternalPackages/SimplePoly City/*
+Assets/ExternalPackages/LowPolyWaterv2/*
 
 # Created by https://www.gitignore.io/api/unity,visualstudio,jetbrains+all,visualstudiocode
 

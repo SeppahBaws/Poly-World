@@ -11,14 +11,13 @@ public class HighlightController : MonoBehaviour
     public GameObject ground;
 
 	private Vector3 _currentDestination;
-	private Vector3 _velocity = Vector3.zero;
 
-	void Update()
+    void Update()
 	{
-		if (Input.GetMouseButton(2))
+		if (Input.GetMouseButton(2) /*|| GameController.Instance.Mode != GameController.GameMode.Build*/)
 		{
-			highlightObject.SetActive(false);
-//            ground.GetComponent<MeshRenderer>().material.SetFloat("_IsGridActive", 0);
+            if (highlightObject.activeSelf)
+			    highlightObject.SetActive(false);
             return;
 		}
 
@@ -34,9 +33,6 @@ public class HighlightController : MonoBehaviour
 			highlightObject.SetActive(true);
 
 			_currentDestination = new Vector3(hitPos.x, 0f, hitPos.y);
-
-            // Update the focus position in the ground's material
-//            ground.GetComponent<MeshRenderer>().material.SetFloat("_IsGridActive", 1);
         }
 
 		// Smoothly move the highlight object to where it needs to be

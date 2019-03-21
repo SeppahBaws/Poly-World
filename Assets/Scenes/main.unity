@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 83048067}
   - component: {fileID: 83048066}
   - component: {fileID: 83048065}
+  - component: {fileID: 83048068}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -268,29 +269,98 @@ MonoBehaviour:
   testAsset: {fileID: 0}
   ShowDebugGrid: 0
   SelectedTileType: 1
+  loadMappingsOnGameLoad: 0
+  tileMappingsSource: {fileID: 4900000, guid: 9f8a1aee1950c7b46af703c57485ba2a, type: 3}
   TileMappings:
   - name: Straight Road
     width: 1
     height: 1
+    randomVariation: 0
     prefab: {fileID: 1897877647657448, guid: b34cd32a453079f4abbf4fb1d609e34e, type: 3}
     type: 1
   - name: House
     width: 1
     height: 1
+    randomVariation: 0
     prefab: {fileID: 1552814149953236, guid: f2d29f2a29ca98b4896ba1bde0949876, type: 3}
     type: 2
   - name: Appartments
     width: 2
     height: 1
+    randomVariation: 0
     prefab: {fileID: 1928062780602310, guid: 4a62626256c131349b20e410647b61e6, type: 3}
     type: 3
   - name: Factory
     width: 3
     height: 3
+    randomVariation: 0
     prefab: {fileID: 1395538823710122, guid: ed42fe85859e77248bc7a4bde71cd71e, type: 3}
     type: 4
-  Mappings: []
-  tileMappingsSource: {fileID: 4900000, guid: 9f8a1aee1950c7b46af703c57485ba2a, type: 3}
+  Mappings:
+  - name: Road
+    width: 1
+    height: 1
+    assignedType: 1
+    randomVariation: 0
+    variations:
+    - name: straight_road
+      prefab: 
+      prefabGO: {fileID: 1897877647657448, guid: b34cd32a453079f4abbf4fb1d609e34e,
+        type: 3}
+    - name: corner_road
+      prefab: 
+      prefabGO: {fileID: 1241272410776884, guid: bbd0382371b62c14c9ec222b5513360c,
+        type: 3}
+    - name: tway_road
+      prefab: 
+      prefabGO: {fileID: 1691319604123760, guid: 9ffa39f8e168fad48ab640090764afba,
+        type: 3}
+    - name: cross_road
+      prefab: 
+      prefabGO: {fileID: 1009911930658992, guid: 2479c275c8ce30149bc957104c64f06e,
+        type: 3}
+  - name: House
+    width: 1
+    height: 1
+    assignedType: 2
+    randomVariation: 1
+    variations:
+    - name: House_01
+      prefab: 
+      prefabGO: {fileID: 1552814149953236, guid: f2d29f2a29ca98b4896ba1bde0949876,
+        type: 3}
+    - name: House_02
+      prefab: 
+      prefabGO: {fileID: 1273953365716734, guid: e7452085598879d44b12f9732a0b2cf9,
+        type: 3}
+    - name: House_03
+      prefab: 
+      prefabGO: {fileID: 1933389136806020, guid: 791b7295f3a692040890c0a656a41ddb,
+        type: 3}
+  - name: Appartments
+    width: 2
+    height: 1
+    assignedType: 3
+    randomVariation: 1
+    variations:
+    - name: Appartments_01
+      prefab: 
+      prefabGO: {fileID: 1928062780602310, guid: 4a62626256c131349b20e410647b61e6,
+        type: 3}
+  - name: Factory
+    width: 3
+    height: 3
+    assignedType: 4
+    randomVariation: 1
+    variations:
+    - name: Factory_01
+      prefab: 
+      prefabGO: {fileID: 1395538823710122, guid: ed42fe85859e77248bc7a4bde71cd71e,
+        type: 3}
+    - name: Factory_02
+      prefab: 
+      prefabGO: {fileID: 1137971967559580, guid: 190574b7e141a7c4a926634e682ca40a,
+        type: 3}
   worldParent: {fileID: 840822744}
   worldObjects: []
 --- !u!114 &83048067
@@ -308,6 +378,20 @@ MonoBehaviour:
   highlightObject: {fileID: 186209188}
   highlightSpeed: 0.5
   ground: {fileID: 1781008108}
+--- !u!114 &83048068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83048062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0416fe1839f23b048a50f93aa966d27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildMenu: {fileID: 784741996}
+  _buildMenuButton: {fileID: 1007553742}
 --- !u!224 &168770002 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224872198349485554, guid: 178512160f705dc408eba16f49775bd8,
@@ -1630,6 +1714,7 @@ GameObject:
   - component: {fileID: 1087112194}
   - component: {fileID: 1087112193}
   - component: {fileID: 1087112192}
+  - component: {fileID: 1087112195}
   - component: {fileID: 1087112191}
   m_Layer: 0
   m_Name: Main Camera
@@ -1645,8 +1730,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087112189}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 366311312}
@@ -1721,17 +1806,30 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
+  m_ForceIntoRT: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1087112195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087112189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 08c0e25ed12d86b42b59134d85952cfe, type: 2}
 --- !u!4 &1203060293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442634, guid: 253a1d04345fd1c4bb16163191c3317c,
