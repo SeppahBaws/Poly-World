@@ -18,7 +18,10 @@ public class Tile
 		Road = 1,
 		House = 2,
 		Apartment = 3,
-		Factory = 4
+		Factory = 4,
+		CityHall = 5,
+		PoliceStation = 6,
+		Store = 7,
 	}
 
 	public Tile pathParent;
