@@ -1,4 +1,4 @@
-![Poly World Logo](https://img.itch.zone/aW1nLzExNzYzOTkucG5n/original/RyG6Zz.png)
+![Poly World Logo](https://img.itch.zone/aW1nLzIwNzY1ODgucG5n/original/vho087.png)
 
 <p align="center">
     <a href="https://github.com/SeppahBaws/Poly-World/tags">
