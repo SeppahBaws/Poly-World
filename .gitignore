@@ -3,6 +3,9 @@ Assets/ExternalPackages/SimplePoly World/*
 Assets/ExternalPackages/SimplePoly City/*
 Assets/ExternalPackages/LowPolyWaterv2/*
 
+# Unity license file
+Unity_lic.alf
+
 # Created by https://www.gitignore.io/api/unity,visualstudio,jetbrains+all,visualstudiocode
 
 ### JetBrains+all ###

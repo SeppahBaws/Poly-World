@@ -16,25 +16,32 @@ public class WorldController : MonoBehaviour
 
     public static WorldController Instance { get; private set; }
 
-    public static BuildController BuildController { get; private set; }
+    [SerializeField] private BuildController _buildController;
 
     public Tile.TileType SelectedTileType;
 
     public bool loadMappingsOnGameLoad;
     public TextAsset tileMappingsSource;
-    public List<TileMapping> TileMappings;
     public List<Mapping> Mappings;
     public GameObject worldParent;
     public List<Transform> worldObjects;
+
+    public static Tile GetClickedTile()
+    {
+        Vector3 clickPos = Instance.CastRay();
+        return Instance.world.GetTileAt(Instance.V3ToWorldSpace(clickPos));
+    }
+
+    public static Mapping GetSelectedMapping()
+    {
+        return Instance.Mappings.Find(m => m.assignedType == Instance.SelectedTileType);
+    }
 
     private void Start()
     {
         if (loadMappingsOnGameLoad)
             LoadMappings();
         Instance = this;
-
-        gameObject.AddComponent<BuildController>();
-        BuildController = GetComponent<BuildController>();
     }
 
     // Load the mappings from the JSON file
@@ -63,62 +70,46 @@ public class WorldController : MonoBehaviour
 
     private void Update()
     {
-        HandleSelectedTileTypeSwitching();
+        // if (Input.GetMouseButton(0))
+        // {
+		// 	// Ignore UI clicks
+		// 	if (EventSystem.current.IsPointerOverGameObject())
+		// 		return;
 
-        if (Input.GetMouseButton(0))
-        {
-			// Ignore UI clicks
-			if (EventSystem.current.IsPointerOverGameObject())
-				return;
-
-			Build();
-        }
-        else if (Input.GetMouseButton(1))
-        {
-	        Demolish();
-        }
+		// 	Build();
+        // }
+        // else if (Input.GetMouseButton(1))
+        // {
+	    //     Demolish();
+        // }
     }
 
-    // Temporary code to select what to build
-    private void HandleSelectedTileTypeSwitching()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
-            SelectedTileType = (Tile.TileType)0;
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
-            SelectedTileType = (Tile.TileType)1;
-        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
-            SelectedTileType = (Tile.TileType)2;
-        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
-            SelectedTileType = (Tile.TileType)3;
-        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
-            SelectedTileType = (Tile.TileType)4;
-    }
-
-	// Used by build menu
+	// Used by build menu UI
     public void SwitchBuildType(int type)
     {
+        _buildController.SetMapping(Mappings[type - 1]);
 	    SelectedTileType = (Tile.TileType)type;
     }
 
-    private void Build()
-    {
-        Vector3 clickPoint = CastRay();
-        Tile clickedTile = world.GetTileAt(V3ToWorldSpace(clickPoint));
-//        TileMapping mapping = TileMappings.Find(m => m.type == SelectedTileType);
-        Mapping mapping = Mappings.Find(m => m.assignedType == SelectedTileType);
+    // private void Build()
+    // {
+    //     Vector3 clickPoint = CastRay();
+    //     Tile clickedTile = world.GetTileAt(V3ToWorldSpace(clickPoint));
+    //     Mapping mapping = Mappings.Find(m => m.assignedType == SelectedTileType);
 
-        //Debug.Log(mapping.ToString());
+    //     // TODO: Make a clear distinction between which tool does what.
+    //     // The build controller for instance should handle mouse inputs
+    //     // and then decide what it wants to do with that
+    //     BuildController.Build(mapping, clickedTile, world);
+    // }
 
-        BuildController.Build(mapping, clickedTile, world);
-    }
+    // private void Demolish()
+    // {
+    //     Vector3 clickPoint = CastRay();
+    //     Tile clickedTile = world.GetTileAt(V3ToWorldSpace(clickPoint));
 
-    private void Demolish()
-    {
-        Vector3 clickPoint = CastRay();
-        Tile clickedTile = world.GetTileAt(V3ToWorldSpace(clickPoint));
-
-        BuildController.Demolish(clickedTile, world);
-    }
+    //     BuildController.Demolish(clickedTile, world);
+    // }
 
     public void SpawnInstance(Vector3 pos, Transform obj, Tile tile)
     {
@@ -150,9 +141,9 @@ public class WorldController : MonoBehaviour
     }
 
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-#if UNITY_EDITOR
 		if (EditorApplication.isPlaying && ShowDebugGrid)
         {
             foreach (Tile tile in world.WorldData)
@@ -177,6 +168,6 @@ public class WorldController : MonoBehaviour
                 Gizmos.DrawCube(new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f), Vector3.one / 2);
             }
         }
-#endif
     }
+#endif
 }

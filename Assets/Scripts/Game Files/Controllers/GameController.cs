@@ -5,28 +5,31 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController Instance { get; private set; }
+	public enum GameMode
+	{
+		Inspect = 0,
+		Build = 1,
+		Destroy = 2,
+		Camera = 3
+	}
 
-    public int worldWidth;
-    public int worldHeight;
+	public static GameController Instance { get; private set; }
 
-//    public GameMode Mode
-//    {
-//        get { return Mode; }
-//        set
-//        {
-//            Mode = value; HandleModeChange(Mode);
-//        }
-//    }
+    public int WorldWidth;
+    public int WorldHeight;
 
-    public WorldController worldController;
-
-    public enum GameMode
+	[SerializeField] private GameMode _gameMode;
+    public GameMode Mode
     {
-        Inspect,
-        Build,
-        Camera
+        get { return _gameMode; }
+        set
+        {
+            _gameMode = value;
+            HandleModeChange(_gameMode);
+        }
     }
+
+    public WorldController WorldController;
 
     void Awake()
     {
@@ -35,7 +38,19 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        worldController.GenerateWorld(worldWidth, worldHeight);
+        WorldController.GenerateWorld(WorldWidth, WorldHeight);
+    }
+
+    public void UI_SetMode(int modeId)
+    {
+        Mode = (GameMode)modeId;
+    }
+
+    public void UI_ToggleBuild()
+    {
+        bool wasBuild = Mode == GameMode.Build;
+        Mode = wasBuild ? GameMode.Inspect : GameMode.Build;
+        UIController.Instance.GetBuildMenuGO().SetActive(!wasBuild);
     }
 
     private void HandleModeChange(GameMode mode)
@@ -43,13 +58,19 @@ public class GameController : MonoBehaviour
         switch (mode)
         {
             case GameMode.Inspect:
-                UIController.Instance.SetUIModeInspect();
+//                UIController.Instance.SetUIModeInspect();
+                GetComponent<BuildController>().Disable();
                 break;
             case GameMode.Build:
-                UIController.Instance.SetUIModeBuild();
+				// TODO: not ideal, find a better architecture in which this is much easier to handle.
+	            GetComponent<BuildController>().StartBuild();
+	            break;
+			case GameMode.Destroy:
+//                UIController.Instance.SetUIModeBuild();
+                GetComponent<BuildController>().StartDestroy();
                 break;
             case GameMode.Camera:
-                UIController.Instance.SetUIModeCamera();
+//                UIController.Instance.SetUIModeCamera();
                 break;
             default:
                 return;

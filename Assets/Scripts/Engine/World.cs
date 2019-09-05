@@ -15,7 +15,8 @@ public class World
     public int WorldWidth { get; private set; }
     public int WorldHeight { get; private set; }
     public Tile[,] WorldData { get; private set; }
-    //public Building[] Buildings { get; private set; }
+    public Building[] Buildings { get; private set; }
+	// public BuildableObject[] Objects { get; private set; }
 
     void InitializeTiles()
     {
@@ -38,6 +39,7 @@ public class World
     public Tile GetTileAt(Vector2 position)
     {
         return WorldData[(int)position.x, (int)position.y];
+	    // return null;
     }
 
     public List<Tile> GetTilesFrom(Vector2 position, int width, int height)

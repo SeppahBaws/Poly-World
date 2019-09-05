@@ -14,6 +14,11 @@ public class UIController : MonoBehaviour
         Instance = this;
     }
 
+    public GameObject GetBuildMenuGO()
+    {
+        return _buildMenu;
+    }
+
     public void SetUIModeInspect()
     {
         throw new System.NotImplementedException();

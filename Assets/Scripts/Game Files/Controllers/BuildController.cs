@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 //using Random = System.Random;
 
@@ -24,8 +25,98 @@ struct Neighbor
     }
 }
 
+enum Mode
+{
+    Disabled = 0,
+    Build = 1,
+    Demolish = 2
+}
+
 public class BuildController : MonoBehaviour
 {
+    private GameObject _previewParent;
+
+    private Mapping _selectedMapping;
+    private bool _isPlacingDown = false;
+    private GameObject _currentPrefab;
+
+    private Mode _buildMode = Mode.Demolish;
+
+    private void Start()
+    {
+        _previewParent = GetComponent<HighlightController>().highlightObject;
+    }
+
+    private void Update()
+    {
+        if (_currentPrefab != null)
+        {
+            Vector3 highlightPos = GameController.Instance.GetComponent<HighlightController>().highlightObject.transform.position;
+            _currentPrefab.transform.position = highlightPos - new Vector3(1, 0, 1);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            // Ignore UI clicks
+			if (EventSystem.current.IsPointerOverGameObject())
+				return;
+
+            switch (_buildMode)
+            {
+                case Mode.Build:
+                    Build(WorldController.GetSelectedMapping(), WorldController.GetClickedTile(), WorldController.Instance.world);
+                    break;
+                case Mode.Demolish:
+                    Demolish(WorldController.GetClickedTile(), WorldController.Instance.world);
+                    break;
+            }
+        }
+    }
+
+    public void SetMapping(Mapping mapping)
+    {
+        _selectedMapping = mapping;
+
+        // If we switch mapping while we had another mapping selected,
+        // delete the previous preview model and spawn a new one
+        if (_currentPrefab != null)
+        {
+            // TODO: already select the prefab variation here,
+            // and then use this variation later on to spawn the same variation.
+            Destroy(_currentPrefab);
+        }
+
+        _currentPrefab = Instantiate(_selectedMapping.variations[0].prefabGO);
+        _currentPrefab.transform.parent = _previewParent.transform;
+    }
+
+    public void StartBuild()
+    {
+        _buildMode = Mode.Build;
+
+        if (_selectedMapping != null)
+        {
+            _currentPrefab = Instantiate(_selectedMapping.variations[0].prefabGO);
+            _currentPrefab.transform.parent = _previewParent.transform;
+            _isPlacingDown = true;
+        }
+    }
+
+    public void StartDestroy()
+    {
+        _buildMode = Mode.Demolish;
+
+        Destroy(_currentPrefab);
+        _isPlacingDown = false;
+    }
+
+    public void Disable()
+    {
+        _buildMode = Mode.Disabled;
+        Destroy(_currentPrefab);
+        _isPlacingDown = false;
+    }
+
 //    public void Build(TileMapping mapping, Tile selected, World world)
     public void Build(Mapping mapping, Tile selected, World world)
     {

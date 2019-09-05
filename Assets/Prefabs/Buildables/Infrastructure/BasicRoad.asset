@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbf7c753504b5c44b48e5381123bf8f, type: 3}
+  m_Name: BasicRoad
+  m_EditorClassIdentifier: 
+  Category: 1
+  Name: Road
+  Cost: 0
+  MaxBuildTimes: -1
+  Prefabs:
+  - {fileID: 1241272410776884, guid: bbd0382371b62c14c9ec222b5513360c, type: 3}
+  - {fileID: 1009911930658992, guid: 2479c275c8ce30149bc957104c64f06e, type: 3}
+  - {fileID: 1897877647657448, guid: b34cd32a453079f4abbf4fb1d609e34e, type: 3}
+  - {fileID: 1691319604123760, guid: 9ffa39f8e168fad48ab640090764afba, type: 3}
